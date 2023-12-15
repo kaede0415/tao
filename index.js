@@ -88,17 +88,7 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined
     const attribute = receivedEmbed.author.iconURL
     //通知機構
-    if(["【レア】","【超激レア】","【最強】","【大地の覇者】","【原初】","【ありがとう！】","【天使】","【龍帝】","【三女神】"].includes(rank)){
-      let m = ""
-      let index
-      const board = new MessageEmbed()
-      .setColor("RANDOM")
-      if(["【レア】","【超激レア】","【最強】","【大地の覇者】","【原初】","【ありがとう！】","【天使】","【龍帝】","【三女神】"].includes(rank)){
-  let m = "";
-  let index;
-  const board = new MessageEmbed().setColor("RANDOM");
-
-  if(["【レア】","【超激レア】","【最強】","【大地の覇者】","【原初】","【ありがとう！】","【天使】","【龍帝】","【三女神】"].includes(rank)){
+    if (["【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】", "【レア】"].includes(rank)) {
   let m = "";
   let index;
   const board = new MessageEmbed().setColor("RANDOM");
@@ -112,27 +102,23 @@ client.on("messageCreate", async message => {
       index = 0;
     }
   } else if(rank == "【超激レア】") {
-    if(!data || !data[0][2] || !data[1][2]){
-      board.setTitle("必要な情報が設定されていないので通知は行いません");
-    } else {
-      board.setTitle("超激レアだよ！");
-      m = `<@&${data[1][2]}>さんたち！超激レアです！`;
-      index = 2;
-    }
-  } else {
     if(!data || !data[0][1] || !data[1][1]){
       board.setTitle("必要な情報が設定されていないので通知は行いません");
     } else {
+      board.setTitle("超激レアだよ！");
+      m = `<@&${data[1][1]}>さんたち！超激レアです！`;
+      index = 1;
+    }
+  } else {
+    if(!data || !data[0][2] || !data[1][2]){
+      board.setTitle("必要な情報が設定されていないので通知は行いません");
+    } else {
       board.setTitle("tohru枠だよ！");
-      m = `<@&${data[1][1]}>さんたち！tohru枠です！`;
-      index = 3;
+      m = `<@&${data[1][2]}>さんたち！tohru枠です！`;
+      index = 2;
     }
   }
-  // ここから先の処理
-}
-
-
-      let msg
+  let msg
       let row
       if(m == ""){
         msg = await message.channel.send({ embeds: [ board ] })
@@ -238,7 +224,7 @@ client.on("messageCreate", async message => {
       await message.channel.setName(`${message.channel.name}-lv${level}`)
     }
   }
-)
+})
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
   const data = await db.get(newMessage.guild.id)
