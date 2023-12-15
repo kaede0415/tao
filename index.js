@@ -88,33 +88,34 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined
     const attribute = receivedEmbed.author.iconURL
     //通知機構
-    if (["【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】", "【レア】"].includes(rank)) {
-  let m = "";
-  let index;
-  const board = new MessageEmbed().setColor("RANDOM");
-
-  if(rank == "【レア】"){
-    if(!data || !data[0][0] || !data[1][0]){
-      board.setTitle("必要な情報が設定されていないので通知は行いません");
-    } else {
-      board.setTitle("レアだよ！");
-      m = `<@&${data[1][0]}>さんたち！レアです！`;
-      index = 0;
-    }
-  } else if(rank == "【超激レア】") {
-    if(!data || !data[0][1] || !data[1][1]){
-      board.setTitle("必要な情報が設定されていないので通知は行いません");
-    } else {
-      board.setTitle("超激レアだよ！");
-      m = `<@&${data[1][1]}>さんたち！超激レアです！`;
-      index = 1;
-    }
-  } else {
+    if(["【超激レア】","【最強】","【大地の覇者】","【原初】","【ありがとう！】","【天使】","【龍帝】","【三女神】","【レア】"].includes(rank)){
+      let m = ""
+      let index
+      const board = new MessageEmbed()
+      .setColor("RANDOM")
+      if(rank == "【超激レア】"){
+        if(!data || !data[0][0] || !data[1][0]){
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        }else{
+          board.setTitle("超激レアだよ！");
+          m = `<@&${data[1][0]}>さんたち！超激レアです！`;
+          index = 0
+        }
+      }else{
+        if(!data || !data[0][1] || !data[1][1]){
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        }else{
+          board.setTitle("tohru枠だよ！");
+          m = `<@&${data[1][1]}>さんたち！tohru枠です！`;
+          index = 1
+        }
+      }else {
+   if(rank == "【レア】"){
     if(!data || !data[0][2] || !data[1][2]){
-      board.setTitle("必要な情報が設定されていないので通知は行いません");
+      board.setTitle("必要な情報が設定されていないので通知は行いません")
     } else {
-      board.setTitle("tohru枠だよ！");
-      m = `<@&${data[1][2]}>さんたち！tohru枠です！`;
+      board.setTitle("レア枠だよ！")
+      m = `<@&${data[1][2]}>さんたち！レア枠です！`
       index = 2;
     }
   }
@@ -154,7 +155,7 @@ client.on("messageCreate", async message => {
       }
       const embed = new MessageEmbed()
       .setAuthor(`属性: ${zokusei}`,attribute)
-      .setDescription(`<#${message.channel.id}>で**${rank}${name}**が出現しました！\n\nLv.\`${Number(lv).toLocaleString()}\` HP \`${Number(lv*10+50).toLocaleString()}\`\n\n[**Direct Link**](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`)
+      .setDescription(`<#${message.channel.id}>で**${rank}${name}**が出現しました！\n\nLv.\`${Number(lv).toLocaleString()}\` HP \`${Number(lv*10+50).toLocaleString()}\`\n\n[**Direct Link**](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`
       .setFooter("User TAO")
       .setColor("RANDOM")
       if(image != undefined) embed.setThumbnail(image)
