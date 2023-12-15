@@ -58,7 +58,7 @@ if (process.env.DISCORD_BOT_TOKEN == undefined) {
 }
 
 client.on('ready', async () => {
-  client.user.setActivity(`Made By kamui_kun | ${client.guilds.cache.size}servers | ${client.users.cache.size}members`, {
+  client.user.setActivity(`${client.guilds.cache.size}servers | ${client.users.cache.size}members`, {
     type: 'PLAYING'
   });
   const embed = new MessageEmbed()
@@ -66,7 +66,7 @@ client.on('ready', async () => {
   .setDescription(">>> ```diff\n+ Hello World!　　　　　``````diff\n+ 導入サーバー数:" + client.guilds.cache.size + "\n+ ユーザー数:" + client.users.cache.size + "```" + moment().format("YYYY-MM-DD HH:mm:ss"))
   .setThumbnail(client.user.displayAvatarURL())
   .setColor("RANDOM")
-  client.channels.cache.get("1183460380119421048").send({ embeds: [ embed ] })
+  client.channels.cache.get("1185118798290886767").send({ embeds: [ embed ] })
   const data = []
   for(const commandName in commands){
     data.push(commands[commandName].data)
