@@ -36,8 +36,8 @@ module.exports = {
       },
       {
         type: "CHANNEL",
-        name: "レア枠通知channel",
-        description: "レアの通知に使用するチャンネルを選択",
+        name: "超激レア通知channel",
+        description: "超激レアの通知に使用するチャンネルを選択",
         channel_types: [0],
       },
       {
@@ -80,12 +80,12 @@ module.exports = {
   },
   async execute(interaction) {
     if(!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ content: "サーバー管理者しか使えません", ephemeral: true })
-    const ch1 = interaction.options.getChannel("レア通知channel");
-    const ch2 = interaction.options.getChannel("超激レア通知channel");
-    const ch3 = interaction.options.getChannel("tohru枠通知channel");
-    const role1 = interaction.options.getRole("超激通知role");
+    const ch3 = interaction.options.getChannel("レア通知channel");
+    const ch1 = interaction.options.getChannel("超激レア通知channel");
+    const ch2 = interaction.options.getChannel("tohru枠通知channel");
+    const role3 = interaction.options.getRole("レア通知role");
+    const role1 = interaction.options.getRole("超激レア通知role");
     const role2 = interaction.options.getRole("tohru枠通知role");
-    const role3 = interaction.options.getRole("レア枠通知role");
     const pet = interaction.options.getBoolean("ペット厳選機能");
     const percent = interaction.options.getInteger("ペット厳選数値");
     const stop = interaction.options.getBoolean("轢き殺し防止");
@@ -105,9 +105,9 @@ module.exports = {
     if(stop) data.splice(3,1,stop)
     const embed = new MessageEmbed()
       .setTitle("設定状況:")
+      .addField(`= レア枠通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
       .addField(`= 超激通知用ch/role =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
       .addField(`= tohru枠通知用ch/role =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
-      .addField(`= レア枠通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
       .addField(`= PET厳選機能 =`,`>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
       .addField(`= 轢き殺し防止 =`,`>>> ${data[3] != undefined ? data[3] : "未設定"}`)
       .setColor("RANDOM")
