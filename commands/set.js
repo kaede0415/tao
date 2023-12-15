@@ -30,8 +30,14 @@ module.exports = {
     options: [
       {
         type: "CHANNEL",
-        name: "超激通知channel",
-        description: "超激の通知に使用するチャンネルを選択",
+        name: "レア通知channel",
+        description: "レアの通知に使用するチャンネルを選択",
+        channel_types: [0],
+      },
+      {
+        type: "CHANNEL",
+        name: "超激レア通知channel",
+        description: "超激レアの通知に使用するチャンネルを選択",
         channel_types: [0],
       },
       {
