@@ -1,4 +1,4 @@
-const http = require('http')
+const http = require('http');
 const { Client, Intents, MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const moment = require('moment');
 const express = require('express');
@@ -17,6 +17,7 @@ const client = new Client({
 const { Modal, TextInputComponent, SelectMenuComponent, showModal } = require("discord-modals");
 const discordModals = require('discord-modals');
 discordModals(client);
+
 const newbutton = (buttondata) => {
   return {
     components: buttondata.map((data) => {
@@ -33,43 +34,46 @@ const newbutton = (buttondata) => {
     type: 1,
   };
 };
-process.env.TZ = 'Asia/Tokyo'
-"use strict";
-let guildId
 
-const commands = {}
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
+process.env.TZ = 'Asia/Tokyo';
+let guildId;
+
+const commands = {};
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 http
   .createServer(function(request, response) {
-    response.writeHead(200, { 'Content-Type': 'text/plain;charset=utf-8' })
-    response.end(`${client.user.tag} is ready!\n導入サーバー:${client.guilds.cache.size}\nユーザー:${client.users.cache.size}`)
+    response.writeHead(200, { 'Content-Type': 'text/plain;charset=utf-8' });
+    response.end(`${client.user.tag} is ready!\n導入サーバー:${client.guilds.cache.size}\nユーザー:${client.users.cache.size}`);
   })
-  .listen(3000)
+  .listen(3000);
 
-for(const file of commandFiles){
+for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
-  commands[command.data.name] = command
+  commands[command.data.name] = command;
 }
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
-  console.error('tokenが設定されていません！')
-  process.exit(0)
+  console.error('tokenが設定されていません！');
+  process.exit(0);
 }
 
 client.on('ready', async () => {
   client.user.setActivity(`${client.guilds.cache.size}servers | ${client.users.cache.size}members`, {
     type: 'PLAYING'
   });
+
   const embed = new MessageEmbed()
-  .setTitle("起動しました！")
-  .setDescription(">>> ```diff\n+ Hello World!　　　　　``````diff\n+ 導入サーバー数:" + client.guilds.cache.size + "\n+ ユーザー数:" + client.users.cache.size + "```" + moment().format("YYYY-MM-DD HH:mm:ss"))
-  .setThumbnail(client.user.displayAvatarURL())
-  .setColor("RANDOM")
-  client.channels.cache.get("1185118798290886767").send({ embeds: [ embed ] })
-  const data = []
-  for(const commandName in commands){
-    data.push(commands[commandName].data)
+    .setTitle("起動しました！")
+    .setDescription(">>> ```diff\n+ Hello World!　　　　　``````diff\n+ 導入サーバー数:" + client.guilds.cache.size + "\n+ ユーザー数:" + client.users.cache.size + "```" + moment().format("YYYY-MM-DD HH:mm:ss"))
+    .setThumbnail(client.user.displayAvatarURL())
+    .setColor("RANDOM");
+
+  client.channels.cache.get("1185118798290886767").send({ embeds: [embed] });
+
+  const data = [];
+  for (const commandName in commands) {
+    data.push(commands[commandName].data);
   }
   await client.application.commands.set(data);
   client.user.setStatus("idle");
@@ -77,189 +81,216 @@ client.on('ready', async () => {
 });
 
 client.on("messageCreate", async message => {
-  if(message.author.id != "526620171658330112") return
-  const receivedEmbed = message.embeds[0]
-  const data = await db.get(message.guild.id)
-  if(receivedEmbed && receivedEmbed.title && receivedEmbed.title.match(/待ち構えている...！/) && receivedEmbed.author){
-    const zokusei = receivedEmbed.author.name.match(/\[(.*?)\]/g)[0]
-    const rank = `【${receivedEmbed.author.name.split(":")[2].replace(" ","")}】`
-    const name = receivedEmbed.title.split("\n")[0].replace("が待ち構えている...！","")
-    const lv = receivedEmbed.title.split("\n")[1].replaceAll(",","").match(/^\D+(\d+)\D+(\d+)\D+(\d+)$/)[1]
-    const image = receivedEmbed.image.url || undefined
-    const attribute = receivedEmbed.author.iconURL
-    //通知機構
-    if(["【超激レア】","【最強】","【大地の覇者】","【原初】","【ありがとう！】","【天使】","【龍帝】","【三女神】","【レア】"].includes(rank)){
-      let m = ""
-      let index
-      const board = new MessageEmbed()
-      .setColor("RANDOM")
-      if(rank == "【超激レア】"){
-        if(!data || !data[0][0] || !data[1][0]){
+  if (message.author.id != "526620171658330112") return;
+
+  const receivedEmbed = message.embeds[0];
+  const data = await db.get(message.guild.id);
+
+  if (receivedEmbed && receivedEmbed.title && receivedEmbed.title.match(/待ち構えている...！/) && receivedEmbed.author) {
+    const zokusei = receivedEmbed.author.name.match(/\[(.*?)\]/g)[0];
+    const rank = `【${receivedEmbed.author.name.split(":")[2].replace(" ", "")}】`;
+    const name = receivedEmbed.title.split("\n")[0].replace("が待ち構えている...！", "");
+    const lv = receivedEmbed.title.split("\n")[1].replaceAll(",", "").match(/^\D+(\d+)\D+(\d+)\D+(\d+)$/)[1];
+    const image = receivedEmbed.image.url || undefined;
+    const attribute = receivedEmbed.author.iconURL;
+
+    if (["【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】", "【レア】"].includes(rank)) {
+      let m = "";
+      let index;
+      const board = new MessageEmbed().setColor("RANDOM");
+
+      if (rank == "【超激レア】") {
+        if (!data || !data[0][0] || !data[1][0]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
-        }else{
+        } else {
           board.setTitle("超激レアだよ！");
           m = `<@&${data[1][0]}>さんたち！超激レアです！`;
-          index = 0
+          index = 0;
         }
-      }else{
-        if(!data || !data[0][1] || !data[1][1]){
+      } else if (rank == "【レア】") {
+        if (!data || !data[0][2] || !data[1][2]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
-        }else{
+        } else {
+          board.setTitle("レア枠だよ！");
+          m = `<@&${data[1][2]}>さんたち！レア枠です！`;
+          index = 2;
+        }
+      } else {
+        if (!data || !data[0][1] || !data[1][1]) {
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        } else {
           board.setTitle("tohru枠だよ！");
           m = `<@&${data[1][1]}>さんたち！tohru枠です！`;
-          index = 1
+          index = 1;
         }
-      }else {
-   if(rank == "【レア】"){
-    if(!data || !data[0][2] || !data[1][2]){
-      board.setTitle("必要な情報が設定されていないので通知は行いません")
-    } else {
-      board.setTitle("レア枠だよ！")
-      m = `<@&${data[1][2]}>さんたち！レア枠です！`
-      index = 2;
-    }
-  }
-  let msg
-      let row
-      if(m == ""){
-        msg = await message.channel.send({ embeds: [ board ] })
-      }else{
-        const but1 = new MessageButton()
-        const but2 = new MessageButton()
-        const but3 = new MessageButton()
-        but1
-        .setLabel("轢き防止解除")
-        .setStyle("SUCCESS")
-        .setCustomId("remove")
-        .setEmoji("🤞")
-        but2
-        .setLabel("通知")
-        .setStyle("PRIMARY")
-        .setCustomId(`mt`)
-        .setEmoji("✅")
-        but3
-        .setLabel("通知しない")
-        .setStyle("DANGER")
-        .setCustomId("nomt")
-        .setEmoji("❎")
-        if(data[3] == true){
-          message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
-          but2.setDisabled(true)
-          but3.setDisabled(true)
-        }else{
-          but1.setDisabled(true)
-        }
-        row = new MessageActionRow()
-        .addComponents(but1,but2,but3)
-        msg = await message.channel.send({ embeds: [ board ], components: [ row ] })
       }
+
+      let msg;
+      let row;
+
+      if (m == "") {
+        msg = await message.channel.send({ embeds: [board] });
+      } else {
+        const but1 = new MessageButton()
+          .setLabel("轢き防止解除")
+          .setStyle("SUCCESS")
+          .setCustomId("remove")
+          .setEmoji("🤞");
+
+        const but2 = new MessageButton()
+          .setLabel("通知")
+          .setStyle("PRIMARY")
+          .setCustomId(`mt`)
+          .setEmoji("✅");
+
+        const but3 = new MessageButton()
+          .setLabel("通知しない")
+          .setStyle("DANGER")
+          .setCustomId("nomt")
+          .setEmoji("❎");
+
+        if (data[3] == true) {
+          message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
+          but2.setDisabled(true);
+          but3.setDisabled(true);
+        } else {
+          but1.setDisabled(true);
+        }
+
+        row = new MessageActionRow().addComponents(but1, but2, but3);
+        msg = await message.channel.send({ embeds: [board], components: [row] });
+      }
+
       const embed = new MessageEmbed()
-      .setAuthor(`属性: ${zokusei}`,attribute)
-      .setDescription(`<#${message.channel.id}>で**${rank}${name}**が出現しました！\n\nLv.\`${Number(lv).toLocaleString()}\` HP \`${Number(lv*10+50).toLocaleString()}\`\n\n[**Direct Link**](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`
-      .setFooter("User TAO")
-      .setColor("RANDOM")
-      if(image != undefined) embed.setThumbnail(image)
+        .setAuthor(`属性: ${zokusei}`, attribute)
+        .setDescription(`<#${message.channel.id}>で**${rank}${name}**が出現しました！\n\nLv.\`${Number(lv).toLocaleString()}\` HP \`${Number(lv * 10 + 50).toLocaleString()}\`\n\n[**Direct Link**](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`)
+        .setFooter("User TAO")
+        .setColor("RANDOM");
+
+      if (image != undefined) embed.setThumbnail(image);
+
       client.on("interactionCreate", async interaction => {
-        if(!interaction.isButton()){
+        if (!interaction.isButton()) {
           return;
         }
-        if(interaction.customId == "remove"){
-          const tao = client.users.cache.get("526620171658330112")
-          row.components[0].setDisabled(true)
-          row.components[1].setDisabled(false)
-          row.components[2].setDisabled(false)
-          msg.edit({ embeds:[ board ], components: [ row ] });
+
+        if (interaction.customId == "remove") {
+          const tao = client.users.cache.get("526620171658330112");
+          row.components[0].setDisabled(true);
+          row.components[1].setDisabled(false);
+          row.components[2].setDisabled(false);
+          msg.edit({ embeds: [board], components: [row] });
           await interaction.deferUpdate();
           interaction.channel.permissionOverwrites.edit(tao, { VIEW_CHANNEL: true }).catch(console.error);
         }
-        if(interaction.customId == "mt"){
-          const ch = client.channels.cache.get(data[0][index])
-          const notify = await ch.send({ content: m, embeds: [ embed ] })
+
+        if (interaction.customId == "mt") {
+          const ch = client.channels.cache.get(data[0][index]);
+          const notify = await ch.send({ content: m, embeds: [embed] });
           const success = new MessageEmbed()
-          .setTitle("通知完了")
-          .setURL(`https://discord.com/channels/${notify.guild.id}/${notify.channel.id}/${notify.id}`)
-          .setColor("RANDOM")
-          interaction.message.edit({ embeds:[success], components:[ newbutton([ { id: "x", emoji: "❎", style: 2, disabled: true } ]) ] })
+            .setTitle("通知完了")
+            .setURL(`https://discord.com/channels/${notify.guild.id}/${notify.channel.id}/${notify.id}`)
+            .setColor("RANDOM");
+
+          interaction.message.edit({ embeds: [success], components: [newbutton([{ id: "x", emoji: "❎", style: 2, disabled: true }])] });
         }
-        if(interaction.customId == "nomt"){
-          interaction.message.delete()
+
+        if (interaction.customId == "nomt") {
+          interaction.message.delete();
         }
-      })
+      });
     }
-    //自動変更
-    if(message.channel.topic == "none-auto:100"){
-      const level = Math.floor(Number(lv) / 100) * 100
-      if(message.channel.name.match(/lv+\d+$/)){
-        const n = message.channel.name.match(/lv+(\d+)$/)
-        if(n[1] == level){
+
+    if (message.channel.topic == "none-auto:100") {
+      const level = Math.floor(Number(lv) / 100) * 100;
+
+      if (message.channel.name.match(/lv+\d+$/)) {
+        const n = message.channel.name.match(/lv+(\d+)$/);
+
+        if (n[1] == level) {
           return;
         }
-        const name = message.channel.name.replace(/lv+\d+$/,`lv${level}`)
-        await message.channel.setName(name)
+
+        const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
+        await message.channel.setName(name);
         return;
       }
-      await message.channel.setName(`${message.channel.name}-lv${level}`)
-    }else if(message.channel.topic == "none-auto:1000"){
-      const level = Math.floor(Number(lv) / 1000) * 1000
-      if(message.channel.name.match(/lv+\d+$/)){
-        const n = message.channel.name.match(/lv+(\d+)$/)
-        if(n[1] == level){
+
+      await message.channel.setName(`${message.channel.name}-lv${level}`);
+    } else if (message.channel.topic == "none-auto:1000") {
+      const level = Math.floor(Number(lv) / 1000) * 1000;
+
+      if (message.channel.name.match(/lv+\d+$/)) {
+        const n = message.channel.name.match(/lv+(\d+)$/);
+
+        if (n[1] == level) {
           return;
         }
-        const name = message.channel.name.replace(/lv+\d+$/,`lv${level}`)
-        await message.channel.setName(name)
+
+        const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
+        await message.channel.setName(name);
         return;
       }
-      await message.channel.setName(`${message.channel.name}-lv${level}`)
-    }else if(message.channel.topic == "none-auto:10000"){
-      const level = Math.floor(Number(lv) / 10000) * 10000
-      if(message.channel.name.match(/lv+\d+$/)){
-        const n = message.channel.name.match(/lv+(\d+)$/)
-        if(n[1] == level){
+
+      await message.channel.setName(`${message.channel.name}-lv${level}`);
+    } else if (message.channel.topic == "none-auto:10000") {
+      const level = Math.floor(Number(lv) / 10000) * 10000;
+
+      if (message.channel.name.match(/lv+\d+$/)) {
+        const n = message.channel.name.match(/lv+(\d+)$/);
+
+        if (n[1] == level) {
           return;
         }
-        const name = message.channel.name.replace(/lv+\d+$/,`lv${level}`)
-        await message.channel.setName(name)
+
+        const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
+        await message.channel.setName(name);
         return;
       }
-      await message.channel.setName(`${message.channel.name}-lv${level}`)
+
+      await message.channel.setName(`${message.channel.name}-lv${level}`);
     }
   }
-})
+});
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
-  const data = await db.get(newMessage.guild.id)
-  const embed = newMessage.embeds[0]
-  if(!data || !data[2][0] || !data[2][1]) return
-  if(newMessage.author.id == "526620171658330112" && embed && embed.description && embed.description.match(/仲間になりたそうに/)){
-    if(Number(embed.fields[1].value.replaceAll(">","").replaceAll("*","").replaceAll(" ","").replaceAll("%","")) >= data[2][1]){
+  const data = await db.get(newMessage.guild.id);
+  const embed = newMessage.embeds[0];
+
+  if (!data || !data[2][0] || !data[2][1]) return;
+
+  if (newMessage.author.id == "526620171658330112" && embed && embed.description && embed.description.match(/仲間になりたそうに/)) {
+    if (Number(embed.fields[1].value.replaceAll(">", "").replaceAll("*", "").replaceAll(" ", "").replaceAll("%", "")) >= data[2][1]) {
       const emb = new MessageEmbed()
-      .setTitle(`攻撃確率${embed.fields[1].value.replaceAll(">","").replaceAll("*","").replaceAll(" ","")}！`)
-      .setFooter(`検知対象:${data[2][1]}%以上`)
-      .setColor("RANDOM")
-      newMessage.reply({ embeds: [ emb ] })
+        .setTitle(`攻撃確率${embed.fields[1].value.replaceAll(">", "").replaceAll("*", "").replaceAll(" ", "")}！`)
+        .setFooter(`検知対象:${data[2][1]}%以上`)
+        .setColor("RANDOM");
+
+      newMessage.reply({ embeds: [emb] });
     }
   }
-})
+});
 
 client.on("interactionCreate", async (interaction) => {
-  if(!interaction.isCommand()){
+  if (!interaction.isCommand()) {
     return;
   }
+
   const command = commands[interaction.commandName];
-  try{
+
+  try {
     await command.execute(interaction);
-  }catch(error){
+  } catch (error) {
     console.error(error);
     await interaction.reply({
       content: '何らかのエラーが発生しました。\n管理者にお伝え下さい。',
       ephemeral: true,
-    })
+    });
   }
 });
 
 client.on('error', (err) => {
-  console.error("error")
-})
+  console.error("error");
+});
 
-client.login(process.env.DISCORD_BOT_TOKEN)
+client.login(process.env.DISCORD_BOT_TOKEN);
