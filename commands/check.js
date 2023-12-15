@@ -35,9 +35,11 @@ module.exports = {
     }
     let flag1 = false,
         flag2 = false,
-        flag3 = false
+        flag3 = false,
+        flag4 = false
     if(data[0][0] != undefined && data[1][0] != undefined) flag1 = true
     if(data[0][1] != undefined && data[1][1] != undefined) flag2 = true
+    if(data[2][0] != undefined && data[2][1] != undefined) flag3 = true
     if(data[2][0] != undefined && data[2][1] != undefined) flag3 = true
     const embed = new MessageEmbed()
     .setTitle("設定状況:")
