@@ -36,14 +36,15 @@ module.exports = {
       },
       {
         type: "CHANNEL",
-        name: "超激レア通知channel",
-        description: "超激レアの通知に使用するチャンネルを選択",
+        name: "レア枠通知channel",
+        description: "レアの通知に使用するチャンネルを選択",
         channel_types: [0],
       },
       {
         type: "CHANNEL",
         name: "tohru枠通知channel",
         description: "tohru枠の通知に使用するチャンネルを選択",
+        channel_types: [0],
       },
       {
         type: "ROLE",
@@ -53,7 +54,7 @@ module.exports = {
       {
         type: "ROLE",
         name: "超激レア通知role",
-        description: "超激レアの通知に使用するロールを選択",
+        description: "超激レア通知に使用するロールを選択",
       },
       {
         type: "ROLE",
@@ -82,34 +83,34 @@ module.exports = {
     const ch1 = interaction.options.getChannel("レア通知channel");
     const ch2 = interaction.options.getChannel("超激レア通知channel");
     const ch3 = interaction.options.getChannel("tohru枠通知channel");
-    const role1 = interaction.options.getRole("レア通知role");
-    const role2 = interaction.options.getRole("超激レア通知role");
-    const role3 = interaction.options.getRole("tohru枠通知role");
+    const role1 = interaction.options.getRole("超激通知role");
+    const role2 = interaction.options.getRole("tohru枠通知role");
+    const role3 = interaction.options.getRole("レア枠通知role");
     const pet = interaction.options.getBoolean("ペット厳選機能");
     const percent = interaction.options.getInteger("ペット厳選数値");
     const stop = interaction.options.getBoolean("轢き殺し防止");
     let data = await db.get(interaction.guild.id)
     if(!data){
-      data = [[undefined,undefined],[undefined,undefined],[undefined,undefined],undefined]
+      data = [[undefined,undefined,undefined],[undefined,undefined,undefined],[undefined,undefined],undefined]
       await db.set(interaction.guild.id,data)
     }
-    if(ch1) data[0].splice(0,0,ch1.id)
-    if(ch2) data[0].splice(0,1,ch2.id)
-    if(ch3) data[0].splice(0,2,ch3.id)
-    if(role1) data[1].splice(1,0,role1.id)
+    if(ch1) data[0].splice(0,1,ch1.id)
+    if(ch2) data[0].splice(1,1,ch2.id)
+    if(ch3) data[0].splice(2,1,ch3.id)
+    if(role1) data[1].splice(0,1,role1.id)
     if(role2) data[1].splice(1,1,role2.id)
-    if(role3) data[1].splice(1,2,role3.id)
+    if(role3) data[1].splice(2,1,role3.id)
     if(pet) data[2].splice(0,1,pet)
     if(percent) data[2].splice(1,1,percent)
     if(stop) data.splice(3,1,stop)
     const embed = new MessageEmbed()
-    .setTitle("設定状況:")
-    .addField(`= レア通知用ch/role =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
-    .addField(`= 超激レア通知用ch/role =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
-    .addField(`= tohru枠通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
-    .addField(`= PET厳選機能 =`,`>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
-    .addField(`= 轢き殺し防止 =`,`>>> ${data[3] != undefined ? data[3] : "未設定"}`)
-    .setColor("RANDOM")
+      .setTitle("設定状況:")
+      .addField(`= 超激通知用ch/role =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
+      .addField(`= tohru枠通知用ch/role =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
+      .addField(`= レア枠通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
+      .addField(`= PET厳選機能 =`,`>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
+      .addField(`= 轢き殺し防止 =`,`>>> ${data[3] != undefined ? data[3] : "未設定"}`)
+      .setColor("RANDOM")
     interaction.reply({ content: "設定が完了しました！", ephemeral: true })
     interaction.channel.send({ embeds: [ embed ] })
     await db.set(interaction.guild.id,data)
