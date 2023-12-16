@@ -94,12 +94,12 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined;
     const attribute = receivedEmbed.author.iconURL;
 
-    if (["【レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
+    if (["【通常】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
       let m = "";
       let index;
       const board = new MessageEmbed().setColor("RANDOM");
 
-      if (rank == "【レア】") {
+      if (rank == "【通常】") {
         if (!data || !data[0][2] || !data[1][2]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
@@ -135,7 +135,7 @@ client.on("messageCreate", async message => {
           .setLabel("轢き防止解除")
           .setStyle("SUCCESS")
           .setCustomId("remove")
-          .setEmoji("🤞");
+          .setEmoji("🤞")
 
         const but2 = new MessageButton()
           .setLabel("通知")
