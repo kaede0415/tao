@@ -42,6 +42,7 @@ module.exports = {
     if (data[0][1] != undefined && data[1][1] != undefined) flag2 = true;
     if (data[0][2] != undefined && data[1][2] != undefined) flag3 = true;
     if (data[0][3] != undefined && data[1][3] != undefined) flag4 = true;
+    if (data[2][0] != undefined && data[2][1] != undefined) flag5 = true
     if (data[3] != undefined) flag5 = true;
 
     const embed = new MessageEmbed()
