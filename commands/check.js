@@ -28,31 +28,32 @@ module.exports = {
     description: "登録された情報を表示します",
   },
   async execute(interaction) {
-    let data = await db.get(interaction.guild.id)
-    if(!data){
-      data = [[undefined,undefined,undefined],[undefined,undefined,undefined],[undefined,undefined,undefined],[undefined,undefined],[undefined,undefined],undefined]
-      await db.set(interaction.guild.id,data)
+    let data = await db.get(interaction.guild.id);
+    if (!data) {
+      data = [[undefined, undefined, undefined], [undefined, undefined, undefined], [undefined, undefined], undefined];
+      await db.set(interaction.guild.id, data);
     }
     let flag1 = false,
-        flag2 = false,
-        flag3 = false,
-        flag4 = false
-    if(data[0][0] != undefined && data[1][0] != undefined) flag1 = true
-    if(data[0][1] != undefined && data[1][1] != undefined) flag2 = true
-    if(data[0][2] != undefined && data[1][2] != undefined) flag3 = true
-    if(data[0][3] != undefined && data[1][3] != undefined) flag4 = true
-    if(data[2][0] != undefined && data[2][1] != undefined) flag5 = true
-    const embed = new MessageEmbed()
-    .setTitle("設定状況:")
-    .addField(`= レア通知用ch/role (レア通知機能:${flag1}) =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
-    .addField(`= 超激レア通知用ch/role (超激通知機能:${flag2}) =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
-    .addField(`= 超激レア通知用ch/role (超激通知機能:${flag3}) =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
-    .addField(`= tohru枠通知用ch/role (tohru枠通知機能:${flag}4) =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
-    .addField(`= PET厳選機能 (${flag5}) =`,`>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
-    .addField(`= 轢き殺し防止 =`,`>>> ${data[3] != undefined ? data[3] : "未設定"}`)
-    .setColor("RANDOM")
-    interaction.reply({ embeds: [ embed ] })
-  }
-}
+      flag2 = false,
+      flag3 = false,
+      flag4 = false,
+      flag5 = false;
+    if (data[0][0] != undefined && data[1][0] != undefined) flag1 = true;
+    if (data[0][1] != undefined && data[1][1] != undefined) flag2 = true;
+    if (data[0][2] != undefined && data[1][2] != undefined) flag3 = true;
+    if (data[0][3] != undefined && data[1][3] != undefined) flag4 = true;
+    if (data[3] != undefined) flag5 = true;
 
-client.login(process.env.DISCORD_BOT_TOKEN)
+    const embed = new MessageEmbed()
+      .setTitle("設定状況:")
+      .addField(`= レア通知用ch/role (レア通知機能:${flag1}) =`, `>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
+      .addField(`= レア通知用ch/role (激レア通知機能:${flag1}) =`, `>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
+      .addField(`= 超激レア通知用ch/role (超激通知機能:${flag2}) =`, `>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
+      .addField(`= tohru枠通知用ch/role (tohru枠通知機能:${flag3}) =`, `>>> ${data[0][3] != undefined ? "<#" + data[0][3] + ">" : "未設定"} / ${data[1][3] != undefined ? "<@&" + data[1][3] + ">" : "未設定"}`)
+      .addField(`= PET厳選機能 (${flag5}) =`, `>>> ${data[3] != undefined ? data[3] : "未設定"}`)
+      .setColor("RANDOM");
+    interaction.reply({ embeds: [embed] });
+  }
+};
+
+client.login(process.env.DISCORD_BOT_TOKEN);
