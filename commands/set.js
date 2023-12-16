@@ -36,6 +36,12 @@ module.exports = {
       },
       {
         type: "CHANNEL",
+        name: "激レア通知channel",
+        description: "激レアの通知に使用するチャンネルを選択",
+        channel_types: [0],
+      },
+      {
+        type: "CHANNEL",
         name: "超激レア通知channel",
         description: "超激レアの通知に使用するチャンネルを選択",
         channel_types: [0],
@@ -50,6 +56,11 @@ module.exports = {
         type: "ROLE",
         name: "レア通知role",
         description: "レアの通知に使用するロールを選択",
+      },
+      {
+        type: "ROLE",
+        name: "激レア通知role",
+        description: "激レアの通知に使用するロールを選択",
       },
       {
         type: "ROLE",

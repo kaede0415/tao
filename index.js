@@ -139,23 +139,24 @@ client.on("messageCreate", async message => {
       if (m == "") {
         msg = await message.channel.send({ embeds: [board] });
       } else {
-        const but1 = new MessageButton(
-          .setLabel("轢き防止解除")
-          .setStyle("SUCCESS")
-          .setCustomId("remove")
-          .setEmoji("🤞")
+        const but1 = new MessageButton()
+  .setLabel("轢き防止解除")
+  .setStyle("SUCCESS")
+  .setCustomId("remove")
+  .setEmoji("🤞");
 
-        const but2 = new MessageButton()
-          .setLabel("通知")
-          .setStyle("PRIMARY")
-          .setCustomId(`mt`)
-          .setEmoji("✅");
+const but2 = new MessageButton()
+  .setLabel("通知")
+  .setStyle("PRIMARY")
+  .setCustomId(`mt`)
+  .setEmoji("✅");
 
-        const but3 = new MessageButton()
-          .setLabel("通知しない")
-          .setStyle("DANGER")
-          .setCustomId("nomt")
-          .setEmoji("❎");
+const but3 = new MessageButton()
+  .setLabel("通知しない")
+  .setStyle("DANGER")
+  .setCustomId("nomt")
+  .setEmoji("❎");
+
 
         if (data[3] == true) {
           message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
