@@ -100,20 +100,20 @@ client.on("messageCreate", async message => {
       const board = new MessageEmbed().setColor("RANDOM");
 
       if (rank == "【レア】") {
-        if (!data || !data[0][0] || !data[1][0]) {
-          board.setTitle("必要な情報が設定されていないので通知は行いません");
-        } else {
-          board.setTitle("レアだよ！");
-          m = `<@&${data[1][0]}>さんたち！レアです！`;
-          index = 0;
-        }
-      } else if (rank == "【超激レア】") {
         if (!data || !data[0][2] || !data[1][2]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
-          board.setTitle("超激レア枠だよ！");
-          m = `<@&${data[1][2]}>さんたち！超激レア枠です！`;
+          board.setTitle("レアだよ！");
+          m = `<@&${data[1][2]}>さんたち！レアです！`;
           index = 2;
+        }
+      } else if (rank == "【超激レア】") {
+        if (!data || !data[0][0] || !data[1][0]) {
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        } else {
+          board.setTitle("超激レア枠だよ！");
+          m = `<@&${data[1][0]}>さんたち！超激レア枠です！`;
+          index = 0;
         }
       } else {
         if (!data || !data[0][1] || !data[1][1]) {
