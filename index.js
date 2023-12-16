@@ -59,7 +59,7 @@ if (process.env.DISCORD_BOT_TOKEN == undefined) {
 }
 
 client.on('ready', async () => {
-  client.user.setActivity(`526620171658330112`, {
+  client.user.setActivity(`tao`, {
     type: 'PLAYING'
   });
 
