@@ -94,34 +94,42 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined;
     const attribute = receivedEmbed.author.iconURL;
 
-    if (["【通常】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
+    if (["【レア】", "【激レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
       let m = "";
       let index;
       const board = new MessageEmbed().setColor("RANDOM");
 
-      if (rank == "【通常】") {
-        if (!data || !data[0][2] || !data[1][2]) {
-          board.setTitle("必要な情報が設定されていないので通知は行いません");
-        } else {
-          board.setTitle("レアだよ！");
-          m = `<@&${data[1][2]}>さんたち！レアです！`;
-          index = 2;
-        }
-      } else if (rank == "【超激レア】") {
+      if (rank == "【レア】") {
         if (!data || !data[0][0] || !data[1][0]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
-          board.setTitle("超激レア枠だよ！");
-          m = `<@&${data[1][0]}>さんたち！超激レア枠です！`;
+          board.setTitle("レアだよ！");
+          m = `<@&${data[1][0]}>さんたち！レアです！`;
           index = 0;
         }
-      } else {
+      } else if (rank == "【激レア】") {
         if (!data || !data[0][1] || !data[1][1]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
-          board.setTitle("tohru枠だよ！");
-          m = `<@&${data[1][1]}>さんたち！tohru枠です！`;
+          board.setTitle("激レア枠だよ！");
+          m = `<@&${data[1][1]}>さんたち！激レア枠です！`;
           index = 1;
+        }
+      } else if (rank == "【超激レア】") {
+        if (!data || !data[0][2] || !data[1][2]) {
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        } else {
+          board.setTitle("超激レア枠だよ！");
+          m = `<@&${data[1][2]}>さんたち！超激レア枠です！`;
+          index = 2;
+        }
+      } else {
+        if (!data || !data[0][3] || !data[1][3]) {
+          board.setTitle("必要な情報が設定されていないので通知は行いません");
+        } else {
+          board.setTitle("tohru枠だよ！");
+          m = `<@&${data[1][3]}>さんたち！tohru枠です！`;
+          index = 3;
         }
       }
 
@@ -131,7 +139,7 @@ client.on("messageCreate", async message => {
       if (m == "") {
         msg = await message.channel.send({ embeds: [board] });
       } else {
-        const but1 = new MessageButton()
+        const but1 = new MessageButton(
           .setLabel("轢き防止解除")
           .setStyle("SUCCESS")
           .setCustomId("remove")
