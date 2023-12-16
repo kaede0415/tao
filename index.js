@@ -69,7 +69,7 @@ client.on('ready', async () => {
     .setThumbnail(client.user.displayAvatarURL())
     .setColor("RANDOM");
 
-  client.channels.cache.get("1184506231575031851").send({ embeds: [embed] });
+  client.channels.cache.get("1185600950551990422").send({ embeds: [embed] });
 
   const data = [];
   for (const commandName in commands) {
@@ -94,12 +94,12 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined;
     const attribute = receivedEmbed.author.iconURL;
 
-    if (["【レア】", "【激レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
+    if (["【通常】", "【激レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
       let m = "";
       let index;
       const board = new MessageEmbed().setColor("RANDOM");
 
-      if (rank == "【レア】") {
+      if (rank == "【通常】") {
         if (!data || !data[0][0] || !data[1][0]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
