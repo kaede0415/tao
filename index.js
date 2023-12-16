@@ -94,25 +94,25 @@ client.on("messageCreate", async message => {
     const image = receivedEmbed.image.url || undefined;
     const attribute = receivedEmbed.author.iconURL;
 
-    if (["【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】", "【レア】"].includes(rank)) {
+    if (["【レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
       let m = "";
       let index;
       const board = new MessageEmbed().setColor("RANDOM");
 
-      if (rank == "【超激レア】") {
+      if (rank == "【レア】") {
         if (!data || !data[0][0] || !data[1][0]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
-          board.setTitle("超激レアだよ！");
-          m = `<@&${data[1][0]}>さんたち！超激レアです！`;
+          board.setTitle("レアだよ！");
+          m = `<@&${data[1][0]}>さんたち！レアです！`;
           index = 0;
         }
-      } else if (rank == "【レア】") {
+      } else if (rank == "【超激レア】") {
         if (!data || !data[0][2] || !data[1][2]) {
           board.setTitle("必要な情報が設定されていないので通知は行いません");
         } else {
-          board.setTitle("レア枠だよ！");
-          m = `<@&${data[1][2]}>さんたち！レア枠です！`;
+          board.setTitle("超激レア枠だよ！");
+          m = `<@&${data[1][2]}>さんたち！超激レア枠です！`;
           index = 2;
         }
       } else {
