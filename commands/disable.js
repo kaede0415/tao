@@ -35,6 +35,11 @@ module.exports = {
       },
       {
         type: "BOOLEAN",
+        name: "激レア通知channel",
+        description: "Trueで削除、Falseで削除しない",
+      },
+      {
+        type: "BOOLEAN",
         name: "超激レア通知channel",
         description: "Trueで削除、Falseで削除しない",
       },
@@ -46,6 +51,11 @@ module.exports = {
       {
         type: "BOOLEAN",
         name: "レア通知role",
+        description: "Trueで削除、Falseで削除しない",
+      },
+      {
+        type: "BOOLEAN",
+        name: "激レア通知role",
         description: "Trueで削除、Falseで削除しない",
       },
       {
@@ -77,12 +87,14 @@ module.exports = {
   },
   async execute(interaction) {
     if(!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ content: "サーバー管理者しか使えません", ephemeral: true })
-    const ch3 = interaction.options.getBoolean("レア通知channel");
-    const ch1 = interaction.options.getBoolean("超激レア通知channel");
-    const ch2 = interaction.options.getBoolean("tohru枠通知channel");
-    const role3 = interaction.options.getBoolean("レア通知role");
-    const role1 = interaction.options.getBoolean("超激レア通知role");
-    const role2 = interaction.options.getBoolean("tohru枠通知role");
+    const ch1 = interaction.options.getBoolean("レア通知channel");
+    const ch2 = interaction.options.getBoolean("激レア通知channel");
+    const ch3 = interaction.options.getBoolean("超激レア通知channel");
+    const ch4 = interaction.options.getBoolean("tohru枠通知channel");
+    const role1 = interaction.options.getBoolean("レア通知role");
+    const role2 = interaction.options.getBoolean("激レア通知role");
+    const role3 = interaction.options.getBoolean("超激レア通知role");
+    const role4 = interaction.options.getBoolean("tohru枠通知role");
     const pet = interaction.options.getBoolean("ペット厳選機能");
     const percent = interaction.options.getBoolean("ペット厳選数値");
     const stop = interaction.options.getBoolean("轢き殺し防止");
@@ -94,17 +106,20 @@ module.exports = {
     if(ch1) data[0].splice(0,1,undefined)
     if(ch2) data[0].splice(1,1,undefined)
     if(ch3) data[0].splice(2,1,undefined)
+    if(ch3) data[0].splice(3,1,undefined)
     if(role1) data[1].splice(0,1,undefined)
     if(role2) data[1].splice(1,1,undefined)
     if(role3) data[1].splice(2,1,undefined)
+    if(role4) data[1].splice(3,1,undefined)
     if(pet) data[2].splice(0,1,undefined)
     if(percent) data[2].splice(1,1,undefined)
     if(stop) data.splice(3,1,undefined)
     const embed = new MessageEmbed()
     .setTitle("設定状況:")
-    .addField(`= レア通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
-    .addField(`= 超激レア通知用ch/role =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
-    .addField(`= tohru枠通知用ch/role =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
+    .addField(`= レア通知用ch/role =`,`>>> ${data[0][0] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
+    .addField(`= 激レア通知用ch/role =`,`>>> ${data[0][1] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
+    .addField(`= 超激レア通知用ch/role =`,`>>> ${data[0][2] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
+    .addField(`= tohru枠通知用ch/role =`,`>>> ${data[0][3] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
     .addField(`= PET厳選機能 =`,`>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
     .addField(`= 轢き殺し防止 =`,`>>> ${data[3] != undefined ? data[3] : "未設定"}`)
     .setColor("RANDOM")
