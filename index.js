@@ -201,7 +201,23 @@ client.on("messageCreate", async message => {
       });
     }
 
-    if (message.channel.topic == "none-auto:100") {
+    if (message.channel.topic == "none-auto:10") {
+      const level = Math.floor(Number(lv) / 10) * 10;
+
+      if (message.channel.name.match(/lv+\d+$/)) {
+        const n = message.channel.name.match(/lv+(\d+)$/);
+
+        if (n[1] == level) {
+          return;
+        }
+
+        const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
+        await message.channel.setName(name);
+        return;
+      }
+
+      await message.channel.setName(`${message.channel.name}-lv${level}`);
+    } else if (message.channel.topic == "none-auto:100") {
       const level = Math.floor(Number(lv) / 100) * 100;
 
       if (message.channel.name.match(/lv+\d+$/)) {
@@ -229,23 +245,7 @@ client.on("messageCreate", async message => {
 
         const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
         await message.channel.setName(name);
-        return;
-      }
-
-      await message.channel.setName(`${message.channel.name}-lv${level}`);
-    } else if (message.channel.topic == "none-auto:10000") {
-      const level = Math.floor(Number(lv) / 10000) * 10000;
-
-      if (message.channel.name.match(/lv+\d+$/)) {
-        const n = message.channel.name.match(/lv+(\d+)$/);
-
-        if (n[1] == level) {
-          return;
-        }
-
-        const name = message.channel.name.replace(/lv+\d+$/, `lv${level}`);
-        await message.channel.setName(name);
-        return;
+        return
       }
 
       await message.channel.setName(`${message.channel.name}-lv${level}`);
