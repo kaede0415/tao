@@ -59,7 +59,7 @@ if (process.env.DISCORD_BOT_TOKEN == undefined) {
 }
 
 client.on('ready', async () => {
-  client.user.setActivity(`${client.guilds.cache.size}servers | ${client.users.cache.size}members`, {
+  client.user.setActivity(`526620171658330112`, {
     type: 'PLAYING'
   });
 
