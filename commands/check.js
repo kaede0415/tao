@@ -47,11 +47,11 @@ module.exports = {
     const embed = new MessageEmbed()
       .setTitle("設定状況:")
       .addField(`= レア通知用ch/role (レア通知機能:${flag1}) =`, `>>> ${data[0][0] != undefined ? "<#" + data[0][0] + ">" : "未設定"} / ${data[1][0] != undefined ? "<@&" + data[1][0] + ">" : "未設定"}`)
-      .addField(`= レア通知用ch/role (激レア通知機能:${flag1}) =`, `>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
-      .addField(`= 超激レア通知用ch/role (超激通知機能:${flag2}) =`, `>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
-      .addField(`= tohru枠通知用ch/role (tohru枠通知機能:${flag3}) =`, `>>> ${data[0][3] != undefined ? "<#" + data[0][3] + ">" : "未設定"} / ${data[1][3] != undefined ? "<@&" + data[1][3] + ">" : "未設定"}`)
-      .addField(`= PET厳選機能 (${flag5}) =`, `>>> ${data[3] != undefined ? data[3] : "未設定"}`)
-      .setColor("RANDOM");
+      .addField(`= 激レア通知用ch/role (激レア通知機能:${flag2}) =`, `>>> ${data[0][1] != undefined ? "<#" + data[0][1] + ">" : "未設定"} / ${data[1][1] != undefined ? "<@&" + data[1][1] + ">" : "未設定"}`)
+      .addField(`= 超激レア通知用ch/role (超激通知機能:${flag3}) =`, `>>> ${data[0][2] != undefined ? "<#" + data[0][2] + ">" : "未設定"} / ${data[1][2] != undefined ? "<@&" + data[1][2] + ">" : "未設定"}`)
+      .addField(`= tohru枠通知用ch/role (tohru枠通知機能:${flag4}) =`, `>>> ${data[0][3] != undefined ? "<#" + data[0][3] + ">" : "未設定"} / ${data[1][3] != undefined ? "<@&" + data[1][3] + ">" : "未設定"}`)
+      .addField(`= PET厳選機能 (${flag5}) =`, `>>> ${data[2][0] != undefined ? data[2][0] : "未設定"} / ${data[2][1] != undefined ? data[2][1] + "%以上" : "未設定"}`)
+      .addField(`= 轢き殺し防止 =`, `>>> ${data[4] != undefined ? data[4] : "未設定"}`)
     interaction.reply({ embeds: [embed] });
   }
 };
