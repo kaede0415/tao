@@ -63,14 +63,14 @@ client.on('ready', async () => {
     type: 'PLAYING'
   });
 
-  const embed = new MessageEmbed()
+const embed = new MessageEmbed()
     .setTitle("起動しました！")
     .setDescription(">>> ```diff\n+ Hello World!　　　　　``````diff\n+ 導入サーバー数:" + client.guilds.cache.size + "\n+ ユーザー数:" + client.users.cache.size + "```" + moment().format("YYYY-MM-DD HH:mm:ss"))
     .setThumbnail(client.user.displayAvatarURL())
     .setColor("RANDOM");
 
-  client.channels.cache.get("1185600950551990422").send({ embeds: [embed] });
-
+  client.channels.cache.get("1185600950551990422").send({ embeds: [embed] });  
+  
   const data = [];
   for (const commandName in commands) {
     data.push(commands[commandName].data);
@@ -93,8 +93,8 @@ client.on("messageCreate", async message => {
     const lv = receivedEmbed.title.split("\n")[1].replaceAll(",", "").match(/^\D+(\d+)\D+(\d+)\D+(\d+)$/)[1];
     const image = receivedEmbed.image.url || undefined;
     const attribute = receivedEmbed.author.iconURL;
-
-    if (["【通常】", "【激レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
+ 
+if (["【通常】", "【激レア】", "【超激レア】", "【最強】", "【大地の覇者】", "【原初】", "【ありがとう！】", "【天使】", "【龍帝】", "【三女神】"].includes(rank)) {
       let m = "";
       let index;
       const board = new MessageEmbed().setColor("RANDOM");
@@ -131,42 +131,42 @@ client.on("messageCreate", async message => {
           m = `<@&${data[1][3]}>さんたち！tohru枠です！`;
           index = 3;
         }
+      } 
+ 
+    let msg;
+    let row;
+
+    if (m == "") {
+      msg = await message.channel.send({ embeds: [board] });
+    } else {
+      let but1 = new MessageButton()
+        .setLabel("轢き防止解除")
+        .setStyle("SUCCESS")
+        .setCustomId("remove")
+        .setEmoji("🤞");
+
+      let but2 = new MessageButton()
+        .setLabel("通知")
+        .setStyle("PRIMARY")
+        .setCustomId(`mt`)
+        .setEmoji("✅");
+
+      let but3 = new MessageButton()
+        .setLabel("通知しない")
+        .setStyle("DANGER")
+        .setCustomId("nomt")
+        .setEmoji("❎");
+
+      if (data[4] == true) {
+        message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
+        but2.setDisabled(true);
+        but3.setDisabled(true);
+      } else {
+        but1.setDisabled(true);
       }
 
-      let msg;
-let row;
-
-if (m == "") {
-  msg = await message.channel.send({ embeds: [board] });
-} else {
-  let but1 = new MessageButton()
-  .setLabel("轢き防止解除")
-  .setStyle("SUCCESS")
-  .setCustomId("remove")
-  .setEmoji("🤞");
-
-let but2 = new MessageButton()
-  .setLabel("通知")
-  .setStyle("PRIMARY")
-  .setCustomId(`mt`)
-  .setEmoji("✅");
-
-let but3 = new MessageButton()
-  .setLabel("通知しない")
-  .setStyle("DANGER")
-  .setCustomId("nomt")
-  .setEmoji("❎");
-
-if (data[4] == true) {
-  message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
-  but2.setDisabled(true);
-  but3.setDisabled(true);
-} else {
-  but1.setDisabled(true);
-}
-
-row = new MessageActionRow().addComponents(but1, but2, but3);
-msg = await message.channel.send({ embeds: [board], components: [row] });
+      row = new MessageActionRow().addComponents(but1, but2, but3);
+      msg = await message.channel.send({ embeds: [board], components: [row] });
 
       const embed = new MessageEmbed()
         .setAuthor(`属性: ${zokusei}`, attribute)
@@ -258,7 +258,7 @@ msg = await message.channel.send({ embeds: [board], components: [row] });
       await message.channel.setName(`${message.channel.name}-lv${level}`);
     }
   }
-};
+});
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
   const data = await db.get(newMessage.guild.id);
