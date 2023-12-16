@@ -158,7 +158,7 @@ const but3 = new MessageButton()
   .setEmoji("❎");
 
 
-        if (data[3] == true) {
+        if (data[4] == true) {
           message.channel.permissionOverwrites.edit(message.author, { VIEW_CHANNEL: false }).catch(console.error);
           but2.setDisabled(true);
           but3.setDisabled(true);
